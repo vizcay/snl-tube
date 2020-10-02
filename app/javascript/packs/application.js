@@ -12,3 +12,25 @@ require("@rails/ujs").start()
 //
 // const images = require.context('../images', true)
 // const imagePath = (name) => images(name, true)
+
+import Vue from 'vue'
+import router from '../src/router'
+import axios from 'axios'
+
+window.addEventListener('load', () => {
+  new Vue({
+    router,
+
+    el: '#vue-app',
+
+    created() {
+      let csrfToken = document.querySelector('meta[name="csrf-token"]')
+      if (csrfToken)
+        axios.defaults.headers.common['X-CSRF-Token'] = csrfToken.getAttribute('content')
+    },
+
+    render(h) {
+      return h('router-view')
+    }
+  })
+})
